@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Nice Chart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <aside class="sidebar">
+      <header class="sidebar-top">
+        <div>
+          <p class="eyebrow">Messages</p>
+          <h1>Nice Chart</h1>
+        </div>
+        <div class="sidebar-head-actions"><button class="icon-btn" id="menuBtn" aria-label="Menu">☰</button><button class="icon-btn" id="newChatBtn" aria-label="New chat">＋</button></div>
+      </header>
+
+      <div class="search-wrap">
+        <span>⌕</span>
+        <input id="searchInput" type="search" placeholder="Search" />
+      </div>
+
+      <div class="room-tabs">
+        <button class="room-tab active" data-tab="chats">Chats</button>
+        <button class="room-tab" data-tab="people">People</button>
+      </div>
+
+      <div id="roomList" class="room-list" data-view="chats">
+        <button class="room active" data-room="general">
+          <div class="avatar blue">NC</div>
+          <div class="room-copy">
+            <div class="room-title-row">
+              <strong id="sidebarMainName">Your Account</strong>
+              <time>Now</time>
+            </div>
+            <p id="generalPreview">Start a conversation…</p>
+          </div>
+          <span class="unread-dot" id="unreadDot"></span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="chat-panel">
+      <header class="chat-header">
+        <button class="mobile-back" id="mobileBackBtn" aria-label="Back">‹</button>
+        <button class="profile-avatar-btn" id="headerProfileBtn" aria-label="Open profile">
+          <div class="avatar blue presence-wrap" id="headerAvatar">NC<span class="presence-dot"></span></div>
+        </button>
+        <button class="chat-person profile-title-btn" id="roomProfileBtn" aria-label="Open profile">
+          <strong id="roomTitle">Your Account</strong>
+          <span id="onlineText">Active now</span>
+        </button>
+        <div class="chat-actions">
+          <button class="icon-btn call-btn" id="audioCallBtn" aria-label="Audio call">☎</button>
+          <button class="icon-btn call-btn" id="videoCallBtn" aria-label="Video call">▣</button>
+          <button class="icon-btn" id="infoBtn" aria-label="Info">ⓘ</button>
+        </div>
+      </header>
+      <div id="chatContextBar" class="chat-context-bar"></div>
+
+      <section id="messageList" class="message-list">
+        <div class="chat-hero">
+          <div class="avatar hero-avatar blue" id="heroAvatar">NC</div>
+          <strong id="chatHeroName">Your Account</strong>
+          <span>Private realtime chat space</span>
+        </div>
+        <div class="day-pill">Today</div>
+      </section>
+      <div id="typingBar" class="typing-bar"></div>
+
+      <form id="messageForm" class="composer">
+        <input id="fileInput" type="file" accept="image/*" hidden />
+        <div class="attach-wrap">
+          <button type="button" class="composer-plus" id="attachBtn" aria-label="More">＋</button>
+          <div id="attachMenu" class="attach-menu">
+            <button type="button" id="photoOptionBtn">🖼️ <span>Photo</span></button>
+            <button type="button" id="locationOptionBtn">📍 <span>Location</span></button>
+          </div>
+        </div>
+        <div class="composer-input-wrap">
+          <textarea id="messageInput" rows="1" placeholder="Aa"></textarea>
+          <button type="button" class="emoji-btn" id="emojiBtn">☺</button>
+        </div>
+        <button type="button" class="mic-btn" id="micBtn" aria-label="Record voice">🎤</button>
+        <button type="submit" class="send-btn" aria-label="Send">➤</button>
+      </form>
+    </main>
+  </div>
+
+  <div id="nameModal" class="modal show">
+    <div class="modal-card auth-card">
+      <div class="logo-bubble">💬</div>
+      <h2>Nice Chart</h2>
+      <p>Register with a username and password. This device remembers your username after login.</p>
+
+      <div class="auth-tabs">
+        <button id="loginTabBtn" class="auth-tab active" type="button">Login</button>
+        <button id="registerTabBtn" class="auth-tab" type="button">Register</button>
+      </div>
+
+      <div id="registerNameWrap" class="auth-field hidden">
+        <label>Username</label>
+        <input id="displayNameInput" maxlength="24" placeholder="Choose a username" autocomplete="username" autocapitalize="none" />
+      </div>
+
+      <div id="rememberedAccountWrap" class="remembered-account hidden">
+        <span>Account</span>
+        <strong id="rememberedAccountName">—</strong>
+        <button id="switchAccountBtn" type="button">Switch</button>
+      </div>
+
+      <div id="loginUsernameWrap" class="auth-field hidden">
+        <label>Username</label>
+        <input id="loginUsernameInput" maxlength="24" placeholder="Username" autocomplete="username" autocapitalize="none" />
+      </div>
+
+      <div class="auth-field">
+        <label>Password</label>
+        <input id="passwordInput" type="password" minlength="4" placeholder="Password" autocomplete="current-password" />
+      </div>
+
+      <button id="startChatBtn" class="primary-btn">Login</button>
+      <div class="auth-divider"><span>or</span></div>
+      <button id="ownerGoogleLoginBtn" class="owner-google-btn" type="button">
+        <span class="google-g">G</span>
+        <span>Owner Login with Google</span>
+      </button>
+      <button id="demoLoginBtn" class="secondary-btn" type="button">Use Local Demo</button>
+      <small>Private and group chats may be reviewable by the app owner. Owner account data is hidden from normal users.</small>
+    </div>
+  </div>
+
+  <div id="menuDrawer" class="menu-drawer">
+    <div class="menu-drawer-head">
+      <strong>Menu</strong>
+      <button id="closeMenuBtn" class="icon-btn" aria-label="Close">✕</button>
+    </div>
+
+    <button class="menu-item" id="menuChatsBtn">💬 <span>Chats</span></button>
+    <button class="menu-item" id="menuPeopleBtn">👥 <span>People</span></button>
+
+    <div class="menu-section">
+      <div class="menu-section-title">Friendship</div>
+      <button class="menu-item" id="menuFriendListBtn">🤝 <span>Friend List</span></button>
+      <button class="menu-item" id="menuFriendRequestsBtn">📨 <span>Friend Requests</span><span id="requestCountBadge" class="menu-count hidden">0</span></button>
+      <button class="menu-item" id="menuGroupChatBtn">👨‍👩‍👧‍👦 <span>Group Chat</span></button>
+    </div>
+
+    <div class="menu-section"><button class="menu-item" id="enableNotificationsBtn">🔔 <span>Enable Notifications</span></button><button class="menu-item" id="logoutBtn">↪ <span>Logout</span></button></div>
+
+    <div id="ownerMenuSection" class="menu-section owner-only hidden">
+      <div class="menu-section-title">Owner Review</div>
+      <button class="menu-item" id="ownerPrivateReviewBtn">🔐 <span>Private Chats</span></button>
+      <button class="menu-item" id="ownerGroupReviewBtn">🛡️ <span>Group Chats</span></button>
+    </div>
+  </div>
+
+  <div id="friendRequestModal" class="modal">
+    <div class="modal-card">
+      <button id="closeFriendRequestBtn" class="profile-close" aria-label="Close">✕</button>
+      <h2>Add Friend</h2>
+      <p>Select a person to send a friend request.</p>
+      <div id="friendRequestPeople" class="picker-list"></div>
+    </div>
+  </div>
+
+
+  <div id="incomingRequestsModal" class="modal">
+    <div class="modal-card">
+      <button id="closeIncomingRequestsBtn" class="profile-close" aria-label="Close">✕</button>
+      <h2>Friend Requests</h2>
+      <div id="incomingRequestsList" class="picker-list"></div>
+    </div>
+  </div>
+
+  <div id="groupCreateModal" class="modal">
+    <div class="modal-card">
+      <button id="closeGroupCreateBtn" class="profile-close" aria-label="Close">✕</button>
+      <h2>Create Group</h2>
+      <input id="groupNameInput" maxlength="50" placeholder="Group name" />
+      <div id="groupMemberPicker" class="picker-list"></div>
+      <button id="createGroupBtn" class="primary-btn">Create Group</button>
+    </div>
+  </div>
+
+  <div id="profileModal" class="modal">
+    <div class="modal-card profile-card">
+      <button id="closeProfileBtn" class="profile-close" aria-label="Close">✕</button>
+      <div class="profile-photo-wrap">
+        <img id="profilePhotoImg" class="profile-photo" alt="Profile photo" />
+        <div id="profileFallback" class="avatar profile-fallback blue">NC</div>
+      </div>
+      <h2 id="profileName">Nice Chart</h2>
+      <p id="profileStatus">Active now</p>
+      <input id="profilePhotoInput" type="file" accept="image/*" hidden />
+      <button id="changePhotoBtn" class="secondary-btn">Change Profile Photo</button>
+      <button id="friendActionBtn" class="primary-btn">Add Friend</button>
+    </div>
+  </div>
+
+
+  <div id="incomingCallModal" class="modal">
+    <div class="modal-card incoming-call-card">
+      <div class="avatar hero-avatar blue" id="incomingCallerAvatar">C</div>
+      <h2 id="incomingCallerName">Incoming Call</h2>
+      <p id="incomingCallType">Audio call</p>
+      <div class="incoming-call-actions">
+        <button id="declineCallBtn" class="decline-call-btn">Decline</button>
+        <button id="answerCallBtn" class="answer-call-btn">Answer</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="callModal" class="call-modal">
+    <div class="call-stage">
+      <video id="remoteVideo" autoplay playsinline></video>
+      <video id="localVideo" autoplay muted playsinline></video>
+      <div id="audioCallAvatar" class="audio-call-avatar">
+        <div class="avatar hero-avatar blue">NC</div>
+        <strong>Nice Chart Call</strong>
+        <span id="callStatus">Connecting…</span>
+      </div>
+      <div class="call-controls">
+        <button id="toggleMicBtn" class="call-control" aria-label="Mute">🎤</button>
+        <button id="toggleCameraBtn" class="call-control" aria-label="Camera">📷</button>
+        <button id="switchCameraBtn" class="call-control" aria-label="Switch camera">🔄</button>
+        <button id="endCallBtn" class="call-control danger" aria-label="End call">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
